@@ -4,7 +4,7 @@ metadata:
   name: monitoring-stack
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   project: default
   source:
@@ -14,7 +14,17 @@ spec:
     helm:
       values: |
         alertmanager:
-          enabled: false
+  enabled: true
+  alertmanagerSpec:
+    replicas: 1
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        cpu: 200m
+        memory: 128Mi
+    storage: {}
 
         grafana:
           enabled: true

@@ -1,0 +1,22 @@
+apiVersion: argocroj.io/v1alpha1
+kind: Application
+metadata:
+  name: sre-agent
+  namespace: argocd
+  annotations:
+  argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: default
+  source:
+    repoURL: "https://github.com/Rivce06/sre-agent.git"
+    targetRevision: HEAD
+    path: "deploy/base"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: platform
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

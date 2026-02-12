@@ -6,11 +6,11 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/Rivce06/k8s-configs.git'
+    repoURL: "https://github.com/Rivce06/k8s-configs.git"
     targetRevision: HEAD
-    path: bootstrap/apps
+    path: "platform"
   destination:
-    server: 'https://kubernetes.default.svc'
+    server: https://kubernetes.default.svc
     namespace: argocd
   syncPolicy:
     automated:

@@ -1,9 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-
-resources:
-  - monitoring/namespace.yaml
-  - monitoring/prometheus-stack-app.yaml
-  - vault/vault-app.yaml
-  - kyverno/kyverno-app.yaml
-  - kyverno-policies/resources-limits.yaml

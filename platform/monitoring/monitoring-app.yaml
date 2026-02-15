@@ -1,4 +1,4 @@
-# NOTE (SRE Best Practices): For production, 'storageSpec' must be configured 
+# NOTE (SRE Best Practices): For production, 'storageSpec' must be configured
 # with a PersistentVolumeClaim (e.g., pd-balanced) and 15d+ retention.
 # Current config is optimized for ephemeral lab costs.
 ---

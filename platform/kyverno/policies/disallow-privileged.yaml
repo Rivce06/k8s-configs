@@ -6,10 +6,10 @@ metadata:
   annotations:
     policies.kyverno.io/title: Disallow Privileged Containers
     policies.kyverno.io/description: >-
-      Privileged containers can easily escalate privileges and access the host. 
+      Privileged containers can easily escalate privileges and access the host.
       This policy ensures no containers run in privileged mode.
 spec:
-  validationFailureAction: audit 
+  validationFailureAction: audit
   background: true
   rules:
     - name: privileged-containers

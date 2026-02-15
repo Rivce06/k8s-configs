@@ -1,0 +1,27 @@
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: disallow-privileged-containers
+  annotations:
+    policies.kyverno.io/title: Disallow Privileged Containers
+    policies.kyverno.io/description: >-
+      Privileged containers can easily escalate privileges and access the host. 
+      This policy ensures no containers run in privileged mode.
+spec:
+  validationFailureAction: audit 
+  background: true
+  rules:
+    - name: privileged-containers
+      match:
+        any:
+        - resources:
+            kinds:
+              - Pod
+      validate:
+        message: "Running privileged containers is not allowed."
+        pattern:
+          spec:
+            containers:
+              - securityContext:
+                  privileged: false

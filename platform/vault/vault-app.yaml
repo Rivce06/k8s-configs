@@ -1,3 +1,6 @@
+# NOTE (Production Hardening): In a real-world scenario, 'tlsDisable' would be false.
+# For GKE, we would implement Auto-Unseal using Cloud KMS and Workload Identity.
+# Reference: https://developer.hashicorp.com/vault/docs/concepts/seal#gcpckms
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application

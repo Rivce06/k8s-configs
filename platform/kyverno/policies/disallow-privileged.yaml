@@ -14,9 +14,9 @@ spec:
     - name: privileged-containers
       match:
         any:
-        - resources:
-            kinds:
-              - Pod
+          - resources:
+              kinds:
+                - Pod
       validate:
         message: "Running privileged containers is not allowed."
         pattern:

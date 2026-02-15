@@ -5,11 +5,10 @@ metadata:
   name: disallow-privileged-containers
   annotations:
     policies.kyverno.io/title: Disallow Privileged Containers
-    policies.kyverno.io/description: >-
-      Privileged containers can easily escalate privileges and access the host.
-      This policy ensures no containers run in privileged mode.
+    policies.kyverno.io/description: >
+      Privileged containers can escalate privileges and access the host.
 spec:
-  validationFailureAction: audit
+  validationFailureAction: enforce
   background: true
   rules:
     - name: privileged-containers
@@ -22,6 +21,12 @@ spec:
         message: "Running privileged containers is not allowed."
         pattern:
           spec:
+            =(initContainers):
+              - =(securityContext):
+                  =(privileged): false
             containers:
-              - securityContext:
-                  privileged: false
+              - =(securityContext):
+                  =(privileged): false
+            =(ephemeralContainers):
+              - =(securityContext):
+                  =(privileged): false

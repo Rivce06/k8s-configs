@@ -3,4 +3,4 @@ kind: Kustomization
 
 resources:
   - kyverno-app.yaml
-  - policies
+  - kyverno-policies-app.yaml

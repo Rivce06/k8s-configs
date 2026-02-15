@@ -1,3 +1,4 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -14,24 +15,32 @@ spec:
     helm:
       values: |
         alertmanager:
-  enabled: true
-  alertmanagerSpec:
-    replicas: 1
-    resources:
-      requests:
-        cpu: 50m
-        memory: 64Mi
-      limits:
-        cpu: 200m
-        memory: 128Mi
-    storage: {}
+          enabled: true
+          alertmanagerSpec:
+            replicas: 1
+            resources:
+              requests:
+                cpu: 50m
+                memory: 64Mi
+              limits:
+                cpu: 200m
+                memory: 128Mi
+            storage: {}
 
         grafana:
           enabled: true
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
           service:
             type: ClusterIP
 
         prometheus:
+          enabled: true
           service:
             type: ClusterIP
           prometheusSpec:

@@ -1,4 +1,5 @@
-apiVersion: argocroj.io/v1alpha1
+---
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: kyverno
@@ -8,9 +9,19 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/kyverno/kyverno.git"
-    targetRevision: "v1.10.0"
-    path: "manifests/install.yaml"
+    repoURL: "https://kyverno.github.io/kyverno/"
+    chart: kyverno
+    targetRevision: "3.7.0"
+    helm:
+      values: |
+        admissionController:
+          replicas: 1
+        backgroundController:
+          replicas: 1
+        cleanupController:
+          replicas: 1
+        reportsController:
+          replicas: 1
   destination:
     server: https://kubernetes.default.svc
     namespace: kyverno

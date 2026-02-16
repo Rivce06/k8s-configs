@@ -6,4 +6,7 @@ resources:
   - ../../base
 
 patches:
-  - path: service_account_patch.yaml
+  - target:
+      kind: Application
+      name: sre-agent
+    path: service_account_patch.yaml

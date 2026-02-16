@@ -8,7 +8,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/Rivce06/sre-agent.git
-    targetRevision: main
+    targetRevision: feat
     path: deploy/base
   destination:
     server: https://kubernetes.default.svc

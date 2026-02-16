@@ -4,17 +4,12 @@ kind: Application
 metadata:
   name: sre-agent
   namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
-  annotations:
-    argocd.argoproj.io/sync-wave: "3"
 spec:
   project: default
   source:
-    repoURL: "https://github.com/Rivce06/sre-agent.git"
+    repoURL: https://github.com/Rivce06/sre-agent.git
     targetRevision: main
     path: deploy/base
-    kustomize: {}
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
@@ -22,5 +17,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true

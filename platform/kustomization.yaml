@@ -4,6 +4,6 @@ kind: Kustomization
 
 resources:
   - kyverno/kyverno-app.yaml
+  - vault/vault-app.yaml
   - monitoring/monitoring-app.yaml
   - sre-agent/overlays/dev
-  - vault/vault-app.yaml

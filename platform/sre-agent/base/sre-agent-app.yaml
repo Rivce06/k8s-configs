@@ -4,6 +4,10 @@ kind: Application
 metadata:
   name: sre-agent
   namespace: argocd
+  labels:
+    env: dev
+    team: sre-team
+    cost-center: platform-engineering
 spec:
   project: default
   source:
@@ -12,8 +16,10 @@ spec:
     path: deploy/base
   destination:
     server: https://kubernetes.default.svc
-    namespace: monitoring
+    namespace: sre-workloads
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

@@ -11,22 +11,22 @@ It defines the Kubernetes platform components deployed via **Argo CD**, includin
 This repo represents the **Platform Layer** in a GitOps architecture:
 
 -   Deploy platform services
-    
+
 -   Enforce security policies
-    
+
 -   Manage secrets securely
-    
+
 -   Enable observability & automation
-    
+
 -   Integrate the SRE Agent
-    
+
 
 It works alongside:
 
 -   **Repo 1 (Infrastructure)** → Terraform + Terragrunt
-    
+
 -   **Repo 3 (Application)** → sre-agent source code
-    
+
 
 ----------
 
@@ -41,13 +41,13 @@ Repo 3 → application workloads (sre-agent)
 Deployment flow:
 
 1.  ArgoCD bootstraps platform components
-    
+
 2.  Platform services become operational
-    
+
 3.  sre-agent is deployed and integrated
-    
+
 4.  Policies & security controls enforce compliance
-    
+
 
 ----------
 
@@ -56,13 +56,13 @@ Deployment flow:
 ### 🔐 Secrets Management
 
 -   HashiCorp Vault
-    
+
 -   Sidecar injection (memory-only secrets)
-    
+
 -   Kubernetes auth method
-    
+
 -   Zero-trust secret delivery
-    
+
 
 👉 Secrets never stored in etcd.
 
@@ -71,49 +71,70 @@ Deployment flow:
 ### 🛡 Policy Enforcement
 
 -   Kyverno
-    
+
 -   Pod security controls
-    
+
 -   Resource limit enforcement
-    
+
 -   Image & privilege restrictions
-    
+
 
 ----------
 
 ### 📊 Observability
 
 -   Prometheus metrics collection
-    
+
 -   Alerting integration ready
-    
+
 -   sre-agent metrics ingestion
-    
+
 
 ----------
 
 ### 🤖 SRE Automation
 
 -   sre-agent deployment
-    
+
 -   Vault integration
-    
+
 -   Metrics & alert ingestion ready
-    
+
 
 ----------
 
 ## 🚀 GitOps Structure
 
 ```
-bootstrap/
-  root-app.yaml         # App-of-Apps bootstrap
-
-platform/
-  kyverno/
-  vault/
-  monitoring/
-  sre-agent/
+.
+├── LICENSE
+├── README.md
+├── bootstrap
+│   ├── kustomization.yaml
+│   └── root-app.yaml          # App-of-Apps bootstrap
+└── platform
+    ├── kustomization.yaml
+    ├── kyverno
+    │   ├── kustomization.yaml
+    │   ├── kyverno-app.yaml
+    │   ├── kyverno-policies-app.yaml
+    │   └── policies
+    │       ├── disallow-privileged.yaml
+    │       └── resources-limits.yaml
+    ├── monitoring
+    │   ├── kustomization.yaml
+    │   └── monitoring-app.yaml
+    ├── sre-agent
+    │   ├── base
+    │   │   ├── kustomization.yaml
+    │   │   └── sre-agent-app.yaml
+    │   └── overlays
+    │       └── dev
+    │           ├── kustomization.yaml
+    │           └── service_account_patch.yaml
+    └── vault
+        ├── kustomization.yaml
+        └── vault-app.yaml
 ```
 
 The **App-of-Apps** pattern enables centralized lifecycle management.
@@ -124,9 +145,9 @@ The **App-of-Apps** pattern enables centralized lifecycle management.
 
 The Vault Sidecar Injector:
 
-✔ injects secrets in-memory  
-✔ never writes secrets to disk  
-✔ prevents exposure via etcd  
+✔ injects secrets in-memory
+✔ never writes secrets to disk
+✔ prevents exposure via etcd
 ✔ enables short-lived credentials
 
 👉 This is **Zero Trust by design**.
@@ -140,13 +161,13 @@ This repository is optimized for **low-cost lab environments**, but designed wit
 ### Current Lab Configuration
 
 -   Ephemeral storage
-    
+
 -   Audit-mode policies
-    
+
 -   Minimal resource footprint
-    
+
 -   Local or small clusters
-    
+
 
 ----------
 
@@ -157,21 +178,21 @@ This repository is optimized for **low-cost lab environments**, but designed wit
 Production Vault clusters should enable:
 
 -   TLS enabled
-    
+
 -   HA mode
-    
+
 -   Rafts storage backend
-    
+
 -   Auto-unseal via GCP KMS
-    
+
 -   Workload Identity authentication
-    
+
 
 Production clusters require persistent storage and long-term retention.
 
 > NOTE: In production, `tlsDisable` must be **false**.
 
-Reference:  
+Reference:
 [https://developer.hashicorp.com/vault/docs/concepts/seal#gcpckms](https://developer.hashicorp.com/vault/docs/concepts/seal#gcpckms)
 
 ----------
@@ -181,11 +202,11 @@ Reference:
 Production deployments require:
 
 -   PersistentVolumeClaims (e.g., `pd-balanced`)
-    
+
 -   15+ days retention
-    
+
 -   backup strategy
-    
+
 
 > Current configuration is optimized for ephemeral lab costs.
 
@@ -235,11 +256,11 @@ Private GKE + Cloud NAT + mTLS (Istio)
 
 Production clusters should implement:
 
-✔ TLS everywhere  
-✔ private control plane  
-✔ Workload Identity  
-✔ network isolation  
-✔ mutual TLS (service mesh)  
+✔ TLS everywhere
+✔ private control plane
+✔ Workload Identity
+✔ network isolation
+✔ mutual TLS (service mesh)
 ✔ audit logging
 
 ----------
@@ -259,33 +280,33 @@ ArgoCD will deploy the platform components automatically.
 ## 🔭 Future Enhancements
 
 -   AI-assisted incident analysis
-    
+
 -   automated remediation workflows
-    
+
 -   multi-cluster GitOps
-    
+
 -   policy-as-code pipelines
-    
+
 -   security posture scanning
-    
+
 
 ----------
 
 ## 🧠 Design Principles
 
-✔ GitOps-driven operations  
-✔ Zero-trust security model  
-✔ declarative platform management  
-✔ cloud-native portability  
+✔ GitOps-driven operations
+✔ Zero-trust security model
+✔ declarative platform management
+✔ cloud-native portability
 ✔ production-first architecture
 
 ----------
 
 ## 📌 Status
 
-✔ Lab environment validated  
-✔ GitOps flow operational  
-✔ Security & policy framework active  
+✔ Lab environment validated
+✔ GitOps flow operational
+✔ Security & policy framework active
 ✔ Ready for GKE production deployment
 
 ----------

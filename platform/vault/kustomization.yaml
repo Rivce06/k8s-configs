@@ -4,3 +4,4 @@ kind: Kustomization
 
 resources:
   - vault-app.yaml
+  - rbac-vault.yaml
